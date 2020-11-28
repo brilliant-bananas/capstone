@@ -1,1 +1,3 @@
 node_modules
+src/uploads/*.jpg
+package-lock.json
