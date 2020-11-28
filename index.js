@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const path = require("path");
-const router = express.Router();
-const multer = require("multer");
+
 // const notFound = require("./views/notFound");
 // const serverError = require("./views/serverError");
 
@@ -15,11 +14,12 @@ app.use(require("method-override")("_method"));
 
 app.use("/", require("./routes/camera"));
 app.use((req, res, next) => {
-  res.status(404).send(notFound());
+  res.send(404);
 });
 
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500);
 });
+
 module.exports = app;
