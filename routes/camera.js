@@ -34,7 +34,7 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
     // console.log(req.file.originalname);
 
     const worker = createWorker({
-      langPath: path.join(__dirname, "./public/src", "lang-data"),
+      langPath: path.join("./public/src", "lang-data"),
       logger: (m) => console.log(m),
     });
 
