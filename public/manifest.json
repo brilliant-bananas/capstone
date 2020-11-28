@@ -1,0 +1,12 @@
+{
+    "short_name": "PWA Camera",
+    "name": "PWA Camera",
+    "background_color": "#FFFFFF",
+    "theme_color": "#015699",
+    "display": "standalone",
+    "orientation": "portrait",
+    "icons": [
+   
+    ],
+    "start_url": "/"
+  }
