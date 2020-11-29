@@ -47,17 +47,54 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
       } = await worker.recognize(
         path.join("./public/src/uploads", req.file.originalname)
       );
-      console.log(text);
+      console.log("TEXT", text);
       //getting total and name of the place
       const data = `${text}`;
       const splitData = data.split(/\n/);
       const name = splitData[0];
-      const total = splitData.find((element) =>
-        element.toUpperCase().includes("TOTAL")
-      );
+
+      const subTotal = splitData.find((element) => /subt?otal/i.test(element));
+      let subTotalPrice;
+      if (subTotal) {
+        const subData = subTotal.split(" ");
+        const subPrice = subData.find((element) => element[0] === "$");
+        if (subPrice) {
+          subTotalPrice = Number(subPrice.slice(1));
+        } else {
+          subTotalPrice = Number(
+            subData.find((element) => {
+              isNaN(Number(element)) === false;
+            })
+          );
+        }
+        const subIndex = splitData.indexOf(subTotal);
+        splitData.splice(subIndex, 1);
+      }
+
+      const totalData = splitData
+        .find((element) => /tot?al/i.test(element))
+        .split(" ");
+      let totalPrice;
+      if (totalData) {
+        const price = totalData.find((element) => element[0] === "$");
+        if (price) {
+          totalPrice = Number(price.slice(1));
+        } else {
+          totalPrice = Number(
+            totalData.find(
+              (element) =>
+                isNaN(Number(element)) === false && Number(element) !== 0
+            )
+          );
+        }
+      }
+
       await worker.terminate();
       console.log("NAME:", name);
-      console.log("TOTAL", total);
+      console.log("subTotal", subTotal);
+      console.log("SUBTOTALPRICE", subTotalPrice);
+      console.log("totalData", totalData);
+      console.log("totalPrice", totalPrice);
     })();
   } catch (err) {
     console.log(err);
