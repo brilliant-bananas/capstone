@@ -9,8 +9,8 @@ const Budget = db.define("budget", {
     },
   },
   period: {
-    type: Sequelize.ENUM("weekly", "monthly", "annual"),
-    defaultValue: "weekly",
+    type: Sequelize.ENUM("monthly", "annual"),
+    defaultValue: "monthly",
   },
   exceed: {
     type: Sequelize.BOOLEAN,

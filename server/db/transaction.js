@@ -2,10 +2,6 @@ const Sequelize = require("sequelize");
 const db = require("./db");
 
 const Transaction = db.define("transaction", {
-  type: {
-    type: Sequelize.ENUM("cash", "receipt"),
-    defaultValue: "cash",
-  },
   amount: {
     type: Sequelize.DECIMAL(10, 2),
     validate: {
@@ -14,9 +10,6 @@ const Transaction = db.define("transaction", {
   },
   storeName: {
     type: Sequelize.STRING,
-  },
-  date: {
-    type: Sequelize.DATE,
   },
 });
 
