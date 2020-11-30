@@ -2,26 +2,44 @@
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, shrink-to-fit=no"
-      />
-      <title>Login</title>
+      <meta name="viewport"content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+      <title>Login / Sign Up Form</title>
       <link rel="stylesheet" href="src/css/style.css" />
     </head>
     <body class="loginBody">
+      
       <div class="loginbox">
-        <h1>Login</h1>
-        <form>
+        
+        <img src="src/images/wallet.png" class="login-image" />
+        
+        <form class="loginForm" id="login">
+          <h1>Login</h1> 
           <p>Username</p>
           <input type="text" name="" placeholder="Enter Username" />
           <p>Password</p>
-          <input type="text" name="" placeholder="Enger Password" />
+          <input type="text" name="" placeholder="Enter Password" />
           <input type="submit" name="" value="login" /><br />
-          <a href="#">Don't have an account ?</a><br />
+          <p class="message">
+              <a href="#" id="linkCreateAccount"> Don't have an account? Sign Up</a>
+            </p>
           <br />
-          <input type="submit" name="" value="Sign Up" />
         </form>
+
+        <form class="signinForm form-hidden" id="createAccount">
+            <h1 class="form-title">Create Account</h1>
+            <p>Username</p>
+            <input type="text" name="" placeholder="Enter Username" />
+            <p>Password</p>
+            <input type="text" name="" placeholder="Enger Password" />
+            <p>Email</p>
+            <input type="text" name="" placeholder="Email" />
+            <br />
+            <input type="submit" name="" value="Sign Up" />
+            <p class="message">
+                <a href="#" id="linkLogin"> Already have an account? Sign In</a> 
+            </p>
+          </form>
       </div>
+      <script src="./toggleForm.js"></script>
     </body>
   </html>
