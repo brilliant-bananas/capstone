@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
+const { Transaction } = require("../server/db/");
 // // Include dependences
 const fs = require("fs");
 
@@ -31,7 +32,7 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
   // Try create local file with content.
   try {
     req.body = await saveFile(req.file);
-    // console.log(req.file.originalname);
+    console.log("req.file-->", req.file);
 
     const worker = createWorker({
       langPath: path.join("./public/src", "lang-data"),
@@ -94,9 +95,14 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
       }
 
       await worker.terminate();
+      const newTransaction = await Transaction.create({
+        amount: totalPrice,
+        storeName: name,
+      });
       console.log("NAME:", name);
       console.log("totalData", totalData);
       console.log("totalPrice", totalPrice);
+      res.send(newTransaction);
     })();
   } catch (err) {
     console.log(err);
