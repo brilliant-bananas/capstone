@@ -16,6 +16,7 @@ app.use(require("method-override")("_method"));
 app.use("/", require("../routes/camera"));
 app.use("/budget", require("../routes/budget"));
 app.use("/category", require("../routes/category"));
+app.use("/transactions", require("../routes/transaction"));
 
 app.use((req, res, next) => {
   res.sendStatus(404);

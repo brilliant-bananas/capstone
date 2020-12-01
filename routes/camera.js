@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
+const { Transaction } = require("../server/db/");
 // // Include dependences
 const fs = require("fs");
 
@@ -31,7 +32,7 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
   // Try create local file with content.
   try {
     req.body = await saveFile(req.file);
-    // console.log(req.file.originalname);
+    console.log("req.file-->", req.file);
 
     const worker = createWorker({
       langPath: path.join("./public/src", "lang-data"),
@@ -50,7 +51,7 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
       console.log("TEXT", text);
       //getting total and name of the place
       const data = `${text}`;
-      const splitData = data.split(/\n/);
+      let splitData = data.split(/\n/);
       const name = splitData[0];
 
       const subTotal = splitData.find((element) => /subt?otal/i.test(element));
@@ -68,7 +69,7 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
           );
         }
         const subIndex = splitData.indexOf(subTotal);
-        splitData.splice(subIndex, 1);
+        splitData = splitData.slice(subIndex + 1);
       }
 
       const totalData = splitData
@@ -76,7 +77,9 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
         .split(" ");
       let totalPrice;
       if (totalData) {
-        const price = totalData.find((element) => element[0] === "$");
+        const price = totalData.find(
+          (element) => element[0] === "$" || element[0] === "s"
+        );
         if (price) {
           totalPrice = Number(price.slice(1));
         } else {
@@ -87,14 +90,19 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
             )
           );
         }
+      } else {
+        totalPrice = 0;
       }
 
       await worker.terminate();
+      const newTransaction = await Transaction.create({
+        amount: totalPrice,
+        storeName: name,
+      });
       console.log("NAME:", name);
-      console.log("subTotal", subTotal);
-      console.log("SUBTOTALPRICE", subTotalPrice);
       console.log("totalData", totalData);
       console.log("totalPrice", totalPrice);
+      res.send(newTransaction);
     })();
   } catch (err) {
     console.log(err);
