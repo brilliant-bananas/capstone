@@ -50,7 +50,7 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
       console.log("TEXT", text);
       //getting total and name of the place
       const data = `${text}`;
-      const splitData = data.split(/\n/);
+      let splitData = data.split(/\n/);
       const name = splitData[0];
 
       const subTotal = splitData.find((element) => /subt?otal/i.test(element));
@@ -68,7 +68,7 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
           );
         }
         const subIndex = splitData.indexOf(subTotal);
-        splitData.splice(subIndex, 1);
+        splitData = splitData.slice(subIndex + 1);
       }
 
       const totalData = splitData
@@ -76,7 +76,9 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
         .split(" ");
       let totalPrice;
       if (totalData) {
-        const price = totalData.find((element) => element[0] === "$");
+        const price = totalData.find(
+          (element) => element[0] === "$" || element[0] === "s"
+        );
         if (price) {
           totalPrice = Number(price.slice(1));
         } else {
@@ -87,12 +89,12 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
             )
           );
         }
+      } else {
+        totalPrice = 0;
       }
 
       await worker.terminate();
       console.log("NAME:", name);
-      console.log("subTotal", subTotal);
-      console.log("SUBTOTALPRICE", subTotalPrice);
       console.log("totalData", totalData);
       console.log("totalPrice", totalPrice);
     })();
