@@ -2,7 +2,13 @@ const Sequelize = require("sequelize");
 const db = require("./db");
 
 const Budget = db.define("budget", {
-  amount: {
+  total: {
+    type: Sequelize.DECIMAL(10, 2),
+    validate: {
+      min: 0,
+    },
+  },
+  remaining: {
     type: Sequelize.DECIMAL(10, 2),
     validate: {
       min: 0,
