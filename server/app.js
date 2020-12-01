@@ -12,7 +12,10 @@ app.use(express.urlencoded({ extended: false })); //parsing middleware for form 
 app.use(express.json());
 app.use(require("method-override")("_method"));
 
+//routes here
 app.use("/", require("../routes/camera"));
+app.use("/budget", require("../routes/budget"));
+app.use("/category", require("../routes/category"));
 
 app.use((req, res, next) => {
   res.sendStatus(404);

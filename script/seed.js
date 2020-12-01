@@ -11,13 +11,6 @@ async function seed() {
     }),
   ]);
 
-  const budgets = await Promise.all([
-    Budget.create({
-      amount: 100,
-      period: "monthly",
-    }),
-  ]);
-
   const categories = await Promise.all([
     Category.create({
       name: "groceries",
@@ -26,10 +19,21 @@ async function seed() {
     }),
   ]);
 
+  const budgets = await Promise.all([
+    Budget.create({
+      amount: 100,
+      period: "monthly",
+      userId: 1,
+      categoryId: 1,
+    }),
+  ]);
+
   const transactions = await Promise.all([
     Transaction.create({
       amount: 50,
       storeName: "wallmart",
+      userId: 1,
+      categoryId: 1,
     }),
   ]);
 }
@@ -39,7 +43,7 @@ async function runSeed() {
   try {
     await seed();
   } catch (err) {
-    // console.error(err);
+    console.error(err);
     process.exitCode = 1;
   } finally {
     console.log("closing db connection");

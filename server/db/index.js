@@ -17,7 +17,6 @@ Transaction.belongsTo(Category);
 module.exports = {
   db,
   seed,
-
   User,
   Category,
   Transaction,

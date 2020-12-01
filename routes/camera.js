@@ -102,10 +102,4 @@ router.post("/upload", upload.single("photo"), async (req, res, next) => {
   }
 });
 
-// // add the router to our app
-// app.use(router.routes());
-// app.use(router.allowedMethods());
-
-// // Run
-// app.listen(3000);
 module.exports = router;
