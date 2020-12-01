@@ -21,7 +21,8 @@ async function seed() {
 
   const budgets = await Promise.all([
     Budget.create({
-      amount: 100,
+      total: 100,
+      remaining: 80,
       period: "monthly",
       userId: 1,
       categoryId: 1,
