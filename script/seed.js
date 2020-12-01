@@ -9,6 +9,12 @@ async function seed() {
       email: "jessi@gmail.com",
       password: "1234",
     }),
+    User.create({
+      firstName: "Michael",
+      lastName: "Welch",
+      email: "michael@gmail.com",
+      password: "1234",
+    }),
   ]);
 
   const categories = await Promise.all([
@@ -16,6 +22,11 @@ async function seed() {
       name: "groceries",
       imageUrl:
         "https://www.flaticon.com/svg/static/icons/svg/2921/2921829.svg",
+    }),
+    Category.create({
+      name: "restaurant",
+      imageUrl:
+        "https://www.flaticon.com/svg/static/icons/svg/2934/2934069.svg",
     }),
   ]);
 
@@ -27,6 +38,13 @@ async function seed() {
       userId: 1,
       categoryId: 1,
     }),
+    Budget.create({
+      total: 200,
+      remaining: 150,
+      period: "annual",
+      userId: 2,
+      categoryId: 2,
+    }),
   ]);
 
   const transactions = await Promise.all([
@@ -35,6 +53,12 @@ async function seed() {
       storeName: "wallmart",
       userId: 1,
       categoryId: 1,
+    }),
+    Transaction.create({
+      amount: 50,
+      storeName: "New York restaurant",
+      userId: 2,
+      categoryId: 2,
     }),
   ]);
 }

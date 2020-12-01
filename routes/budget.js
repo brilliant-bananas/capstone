@@ -3,12 +3,13 @@ const router = express.Router();
 const { Budget } = require("../server/db/");
 
 //views here
+const { budget } = require("../public/views");
 
 // GET: budget/
 router.get("/", async (req, res, next) => {
   try {
     const budgets = await Budget.findAll();
-    res.send(budgets);
+    res.send(budget(budgets));
   } catch (error) {
     next(error);
   }
@@ -43,6 +44,38 @@ router.put("/:budgetId", async (req, res, next) => {
     const updatedBudget = await Budget.findByPk(req.params.budgetId);
     await updatedBudget.update(req.body);
     res.send(updatedBudget);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET budget by annual period
+router.get("/annual", async (req, res, next) => {
+  try {
+    // const userId = await req.user.dataValues.id;
+    const budgets = await Budget.findAll({
+      where: {
+        period: "annual",
+        // userId: userId,
+      },
+    });
+    res.send(budgets);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET budget by monthly period
+router.get("/monthly", async (req, res, next) => {
+  try {
+    // const userId = await req.user.dataValues.id;
+    const budgets = await Budget.findAll({
+      where: {
+        period: "monthly",
+        // userId: userId,
+      },
+    });
+    res.send(budgets);
   } catch (error) {
     next(error);
   }
