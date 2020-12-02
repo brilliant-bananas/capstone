@@ -1,4 +1,4 @@
-const { db, User, Transaction, Category, Budget } = require("./db");
+const { db } = require("./db");
 const app = require("./app");
 
 const PORT = 3000;
