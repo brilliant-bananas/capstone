@@ -90,10 +90,35 @@ const categories = await Promise.all([
     })   
   ]);
 
+  const budgets = await Promise.all([
+    Budget.create({
+      total: 100,
+      remaining: 80,
+      period: "monthly",
+      userId: 1,
+      categoryId: 1,
+    }),
+    Budget.create({
+      total: 200,
+      remaining: 150,
+      period: "annual",
+      userId: 2,
+      categoryId: 2,
+    }),
+  ]);
+
   const transactions = await Promise.all([
     Transaction.create({
       amount: 50,
       storeName: "wallmart",
+      userId: 1,
+      categoryId: 1,
+    }),
+    Transaction.create({
+      amount: 50,
+      storeName: "New York restaurant",
+      userId: 2,
+      categoryId: 2,
     }),
     Transaction.create({
       amount: 100,
