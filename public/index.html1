@@ -12,7 +12,6 @@
     <title>Air Pocket</title>
   </head>
   <body>
-      <div id="app"></div>
     <input type="file" accept="image/*" capture="camera" id="camera" class="inputget">
     <header class="header">Air Pocket </header>
     <div class="container-photo">
