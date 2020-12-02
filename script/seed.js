@@ -12,48 +12,40 @@ async function seed() {
       email: "jessi@gmail.com",
       password: "1234",
     }),
-    User.create({
-      firstName: "Julissa",
-      lastName: "Napoletano",
-      email: "julissa@gmail.com",
-      password: "1234",
-    }),
-    User.create({
-      firstName: "Cathy",
-      lastName: "Sun",
-      email: "cathy@gmail.com",
-      password: "1234",
-    }),
-    User.create({
-      firstName: "Torrel",
-      lastName: "Jeremiah",
-      email: "torrel@gmail.com",
-      password: "1234",
-    }),
-    User.create({
-      firstName: "Yuliya",
-      lastName: "Maroz",
-      email: "yuliya@gmail.com",
-      password: "1234",
-    }),
-  ]);
+      User.create({
+        firstName: "Cathy",
+        lastName: "Sun",
+        email: "cathy@gmail.com",
+        password: "1234",
+      }),
+      User.create({
+        firstName: "Torrel",
+        lastName: "Jeremiah",
+        email: "torrel@gmail.com",
+        password: "1234",
+      }),
+      User.create({
+        firstName: "Yuliya",
+        lastName: "Maroz",
+        email: "yuliya@gmail.com",
+        password: "1234",
+      }),
+    ]);
  
-  const budgets = await Promise.all([
+   const budgets = await Promise.all([
     Budget.create({
-      amount: 100,
+      total: 100,
+      remaining: 80,
       period: "monthly",
+      userId: 1,
+      categoryId: 1,
     }),
     Budget.create({
-      amount: 500,
-      period: "monthly",
-    }),
-    Budget.create({
-      amount: 1000,
-      period: "monthly",
-    }),
-    Budget.create({
-      amount: 300,
-      period: "monthly",
+      total: 200,
+      remaining: 150,
+      period: "annual",
+      userId: 2,
+      categoryId: 2,
     }),
   ]);
  
@@ -67,7 +59,6 @@ const categories = await Promise.all([
       name: "Mortage",
       imageUrl:
         "https://www.flaticon.com/svg/static/icons/svg/1040/1040988.svg"
-
     }),
     Category.create({
       name: "Food & Dining",
@@ -90,10 +81,20 @@ const categories = await Promise.all([
     })   
   ]);
 
+  
+
   const transactions = await Promise.all([
     Transaction.create({
       amount: 50,
       storeName: "wallmart",
+      userId: 1,
+      categoryId: 1,
+    }),
+    Transaction.create({
+      amount: 50,
+      storeName: "New York restaurant",
+      userId: 2,
+      categoryId: 2,
     }),
     Transaction.create({
       amount: 100,
