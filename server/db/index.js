@@ -3,20 +3,20 @@ const User = require("./user");
 const Category = require("./category");
 const Transaction = require("./transaction");
 const Budget = require("./budget");
-const seed = require("../../script/seed");
 
 // associations here
 User.hasMany(Budget);
 User.hasMany(Transaction);
-Transaction.belongsTo(User);
-Budget.belongsTo(User);
+Transaction.belongsTo(User, { foreignKey: "userId" });
+Budget.belongsTo(User, { foreignKey: "userId" });
 
-Budget.belongsTo(Category);
-Transaction.belongsTo(Category);
+Category.hasMany(Budget);
+Category.hasMany(Transaction);
+Budget.belongsTo(Category, { foreignKey: "categoryId" });
+Transaction.belongsTo(Category, { foreignKey: "categoryId" });
 
 module.exports = {
   db,
-  seed,
   User,
   Category,
   Transaction,
